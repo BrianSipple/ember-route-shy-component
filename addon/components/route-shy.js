@@ -23,15 +23,28 @@ export default Component.extend({
   currentRouteName: readOnly('applicationRoute.controller.currentRouteName'),
 
   isVisible: computed('currentRouteName', 'blacklist', function () {
-    debugger;
-    console.log(`Blacklist ${this.get('blacklist')}`);
-    if (isArray('blacklist')) {
+    const currentRouteName = this.get('currentRouteName');
+    console.log(`*** Computing "isVisible" *** `);
+    console.log(`blacklist: ${this.get('blacklist')}`);
+    console.log(`currentRouteName: ${currentRouteName}`);
+    if (isArray(this.get('blacklist'))) {
       for (const routeMatcher of this.get('blacklist')) {
-        if (this.get('currentRouteName').search(routeMatcher) > -1) {
+        debugger;
+
+        if (typeof routeMatcher === 'string') {
+          // For strings, check equality
+          if (routeMatcher === currentRouteName) {
+            console.log('Returning `false`');
+            return false;
+          }
+        } else if (currentRouteName.search(routeMatcher) > -1) {
+          // For RegExps, search for a match
+          console.log('Returning `false`');
           return false;
         }
       }
     }
+    console.log('Returning `true`');
     return true;
   })
 
