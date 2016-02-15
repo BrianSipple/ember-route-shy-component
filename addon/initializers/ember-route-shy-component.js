@@ -1,6 +1,6 @@
-export function initialize() {
+export function initialize () {
   const application = arguments[1] || arguments[0];
-  application.inject('component:route-shy-component', 'applicationRoute', 'route:application');
+  application.inject('component:route-shy', 'applicationRoute', 'route:application');
 }
 
 export default {

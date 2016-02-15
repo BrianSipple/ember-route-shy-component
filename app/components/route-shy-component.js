@@ -1,1 +1,0 @@
-export { default } from 'ember-route-shy-component/components/route-shy-component';

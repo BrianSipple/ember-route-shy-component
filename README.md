@@ -1,6 +1,16 @@
-# Ember-route-shy-component
+# ember-route-shy-component
 
-This README outlines the details of collaborating on this Ember addon.
+A component that won't render when the application's current route matches a preconfigured condition.
+
+## Why
+
+Often, and Ember application will have components or visual elements that are meant to be seen in some scenarios
+and hidden in others. In many cases, this is handled inherently by having templates to correspond to routes. In some cases, however, a component that lives in a top-level route -- a navbar, for example -- might need to have its visibility toggled according based upon the current state of the application in many different child routes. `ember-route-shy-component` helps to handle this.
+
+
+## Usage
+
+Because it's meant to be an edge-case utility as opposed to a design driver. `route-shy-component` operates around a blacklist.
 
 ## Installation
 
