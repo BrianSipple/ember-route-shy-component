@@ -6,14 +6,15 @@ export default Route.extend({
 
   model () {
     return {
-      navbar: {
+      privateNavbar: {
         routesWhereHidden: [
           'application',
-          'homepage',
-          'login'
+          /homepage(?:\.*)/,
+          /login(?:\.*)/,
+          /register(?:\.*)/
         ]
       },
-      shyNavbar: {
+      publicNavbar: {
         routesWhereHidden: [
           /protected(?:\.*)/
         ]

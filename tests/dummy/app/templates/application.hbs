@@ -1,6 +1,8 @@
-{{#route-shy}}
-  {{x-navbar}}
+{{#route-shy class="navbar-block--private" blacklist=model.privateNavbar.routesWhereHidden}}
+  {{private-navbar}}
 {{/route-shy}}
 
-{{shy-navbar blacklist=model.navbar.routesWhereHidden}}
+{{#route-shy class="navbar-block--public" blacklist=model.publicNavbar.routesWhereHidden}}
+  {{public-navbar}}
+{{/route-shy}}
 {{outlet}}

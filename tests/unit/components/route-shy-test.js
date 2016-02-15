@@ -1,9 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
-import sinon from 'sinon';
 
 let component, actual, expected;
-let isVisibleSpy;
 let applicationRoute;
 
 const { run } = Ember;
@@ -23,7 +21,7 @@ moduleForComponent('route-shy', 'Unit | Component | route shy', {
 
 test(`resolving \`isVisible\` to \`true\` when the blacklist is "empty"`, function (assert) {
 
-  component = this.subject({ applicationRoute });
+  component = this.subject({ applicationRoute, template: true });
   component.set('blacklist', undefined);
 
   expected = true;
@@ -55,7 +53,7 @@ test(`resolving \`isVisible\` to \`true\` when the blacklist \
   doesn't contain a RegExp or a string matching the \
   current route`, function (assert) {
 
-  component = this.subject({ applicationRoute });
+  component = this.subject({ applicationRoute, template: true });
 
   run(() => {
     applicationRoute.set('controller.currentRouteName', 'application');
@@ -83,7 +81,7 @@ test(`resolving \`isVisible\` to \`false\` when the blacklist \
   contains a RegExp or a string matching the \
   current route`, function (assert) {
 
-  component = this.subject({ applicationRoute });
+  component = this.subject({ applicationRoute, template: true });
 
   run(() => {
     applicationRoute.set('controller.currentRouteName', 'application');

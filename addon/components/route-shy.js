@@ -4,7 +4,8 @@ import computed from 'ember-new-computed';
 
 const {
   Component,
-  isArray
+  isArray,
+  getWithDefault
 } = Ember;
 
 const {
@@ -22,29 +23,26 @@ export default Component.extend({
 
   currentRouteName: readOnly('applicationRoute.controller.currentRouteName'),
 
+
   isVisible: computed('currentRouteName', 'blacklist', function () {
-    const currentRouteName = this.get('currentRouteName');
-    console.log(`*** Computing "isVisible" *** `);
-    console.log(`blacklist: ${this.get('blacklist')}`);
-    console.log(`currentRouteName: ${currentRouteName}`);
+
+    const currentRouteName = getWithDefault(this, 'currentRouteName', '');
+
     if (isArray(this.get('blacklist'))) {
       for (const routeMatcher of this.get('blacklist')) {
-        debugger;
-
         if (typeof routeMatcher === 'string') {
           // For strings, check equality
           if (routeMatcher === currentRouteName) {
-            console.log('Returning `false`');
             return false;
           }
-        } else if (currentRouteName.search(routeMatcher) > -1) {
+        } else if (routeMatcher instanceof RegExp) {
           // For RegExps, search for a match
-          console.log('Returning `false`');
-          return false;
+          if (currentRouteName.search(routeMatcher) > -1) {
+            return false;
+          }
         }
       }
     }
-    console.log('Returning `true`');
     return true;
   })
 
