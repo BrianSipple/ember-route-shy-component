@@ -4,7 +4,8 @@ import computed from 'ember-new-computed';
 
 const {
   Component,
-  getWithDefault
+  getWithDefault,
+  set
 } = Ember;
 
 const {
@@ -26,6 +27,12 @@ export default Component.extend({
   blacklist: null,
 
   /**
+   * Optional property to "set" with the computed result of `isVisible`
+   */
+  syncWith: null,
+  syncProperty: null,
+
+  /**
    * Helper to ensure that the blacklist is always an array -- even
    * when it's passed inline as a string of spaced-separated names
    */
@@ -43,7 +50,9 @@ export default Component.extend({
 
 
   isVisible: computed('currentRouteName', 'blacklist', function () {
-    //debugger;
+
+    let isVisible = true;
+
     const currentRouteName = getWithDefault(this, 'currentRouteName', '') || '';
     const blacklist = this.get('blacklistArray');
 
@@ -56,15 +65,21 @@ export default Component.extend({
       if (typeof routeMatcher === 'string') {
         // For strings, check equality
         if (routeMatcher === currentRouteName) {
-          return false;
+          isVisible = false;
+          break;
         }
 
       } else if (routeMatcher instanceof RegExp) {
         // For RegExps, search for a match
         if (currentRouteName.search(routeMatcher) > -1) {
-          return false;
+          isVisible = false;
+          break;
         }
       }
+    }
+    
+    if (this.get('syncWith')) {
+      set(this.get('syncWith'), `${this.get('syncProperty') || ''}`, isVisible);
     }
     return true;
   }),
