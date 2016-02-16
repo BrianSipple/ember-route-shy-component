@@ -4,7 +4,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 let component, actual, expected;
 let applicationRoute;
 
-const { run } = Ember;
+const { run, get } = Ember;
 
 moduleForComponent('route-shy', 'Unit | Component | route shy', {
   // Specify the other units that are required for this test
@@ -128,4 +128,39 @@ test(`resolving \`isVisible\` to \`false\` when the blacklist \
 
   assert.equal(actual, expected);
 
+});
+
+test(`synching the computation of \`isVisible\` with a property on a\
+  bound object if set`, function (assert) {
+
+  const myEmberObject = Ember.Object.create({
+    name: 'Brian',
+    password: 'password',
+    isProfileVisible: false
+  });
+
+  const myPojo = {
+    name: 'Marco',
+    password: 'password1',
+    isProfileVisible: true
+  };
+
+  component = this.subject({ applicationRoute, template: false, syncWith: myEmberObject, syncProperty: 'isProfileVisible' });
+
+  expected = true;
+  actual = get(myEmberObject, 'isProfileVisible');
+  assert.equal(actual, expected);
+
+  run(() => { 
+    applicationRoute.set('controller.currentRouteName', 'private');
+    component.setProperties({
+      syncWith: myPojo,
+      syncProperty: 'isProfileVisible',
+      blacklist: ['private']
+    });
+  });
+
+  expected = false;
+  actual = get(myPojo, 'isProfileVisible');
+  assert.equal(actual, expected);
 });

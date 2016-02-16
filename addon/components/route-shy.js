@@ -77,11 +77,11 @@ export default Component.extend({
         }
       }
     }
-    
-    if (this.get('syncWith')) {
+
+    if (this.get('syncWith') && this.get('syncProperty')) {
       set(this.get('syncWith'), `${this.get('syncProperty') || ''}`, isVisible);
     }
-    return true;
+    return isVisible;
   }),
 
   /**
