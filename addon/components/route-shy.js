@@ -17,6 +17,11 @@ export default Component.extend({
   layout,
 
   /*
+   * Force all blacklist items to be matched as Regular expressions
+   */
+  forceRegExp: false,
+
+  /*
   * An optional list of routes in which the component is hidden
   */
   blacklist: null,
@@ -25,11 +30,17 @@ export default Component.extend({
 
 
   isVisible: computed('currentRouteName', 'blacklist', function () {
-
-    const currentRouteName = getWithDefault(this, 'currentRouteName', '');
+    debugger;
+    const currentRouteName = getWithDefault(this, 'currentRouteName', '') || '';
 
     if (isArray(this.get('blacklist'))) {
+
+      if (this.get('forceRegExp')) {
+        return !this._regExpMatchAllBlacklistItems(currentRouteName).length;
+      }
+
       for (const routeMatcher of this.get('blacklist')) {
+
         if (typeof routeMatcher === 'string') {
           // For strings, check equality
           if (routeMatcher === currentRouteName) {
@@ -44,7 +55,13 @@ export default Component.extend({
       }
     }
     return true;
-  })
+  }),
+
+  _regExpMatchAllBlacklistItems (routeName) {
+    return this
+      .get('blacklist')
+      .filter(item => !!(new RegExp(`${item}`).test(routeName)));
+  }
 
 
 });

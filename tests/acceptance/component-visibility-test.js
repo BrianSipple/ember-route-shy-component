@@ -41,11 +41,3 @@ test('visiting the protected /dashboard URL', function(assert) {
 
   });
 });
-
-// test('visiting /homepage', function(assert) {
-//   visit('/homepage');
-//
-//   andThen(function() {
-//     assert.equal(currentURL(), '/homepage');
-//   });
-// });

@@ -13,7 +13,7 @@ and hidden in others. In many cases, this is handled inherently by having templa
 The `route-shy` component dynamically computes its [`isVisible`](http://emberjs.com/api/classes/Ember.Component.html#property_isVisible) property whenever the [`currentRouteName`](https://guides.emberjs.com/v1.10.0/understanding-ember/debugging/#toc_get-current-route-name-path) of the application is changed.  If `currentRouteName` meets the criteria of the [blacklist](blacklist-configuration), Ember will set the component's `display` property to `none`.
 
 ```
-{{#route-shy blacklist=model.navbar.routesWhereHidden}}
+{{#route-shy blacklist=routesWhereNavbarIsHidden}}
   {{x-navbar}}
 {{/route-shy}}
 ```
@@ -26,16 +26,43 @@ Because it's meant to be an edge-case utility as opposed to a design driver. `ro
 
 [Regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) offer a powerful way to control where/when the component will be displayed. Any item in the blacklist that is a regular expression will be [matched](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match) against `currentRouteName`. Otherwise, `route-shy` will attempt to perform a direct string comparison.
 
+An effective approach for setting the list would be to prepare it as bound data -- in any of the [places that your template would already be getting its data from](https://guides.emberjs.com/v2.3.0/templates/handlebars-basics/).
+
+A super-simplified example of using model data might looks like this:
 ```
 <!-- routes/application.js -->
 
+model () {
+  return {
+    navbar: {
+      routesWhereHidden: [
+        'application',
+        /homepage(?:\.*)/,
+        /login(?:\.*)/,
+        /register(?:\.*)/
+      ]
+    }
+    ....
+  };
 
+<!-- routes/application.js -->
+
+{{#route-shy blacklist=model.navbar.routesWhereHidden}}
+  {{private-navbar}}
+{{/route-shy}}
 
 ```
 
+**TODO**: Test feasibility of this feature...  
 
+The blacklist could also be set "inline" with a string of spaced-separated names. By default, each name will be treated as a string (i.e, compared directly). You can, however, tell `route-shy` to treat theses names as regular expressions by setting the `forceRegExp` attribute to `true`.
 
+```
+{{#route-shy blacklist="foo bar /baz(?:\.*)/"}}
+  {{private-navbar}}
+{{/route-shy}}
 
+```
 
 
 

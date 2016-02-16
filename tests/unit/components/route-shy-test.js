@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
+import sinon from 'sinon';
 
 let component, actual, expected;
 let applicationRoute;
@@ -17,6 +18,40 @@ moduleForComponent('route-shy', 'Unit | Component | route shy', {
     });
   }
 });
+//
+// test('updating `isVisible` when the `currentRouteName` or \
+//  `blacklist` changes', function (assert) {
+//
+//    component = this.subject({ applicationRoute, template: true });
+//    component.isVisible.set = sinon.spy();
+//
+//    assert.equal(component.isVisible.set.callCount, 0);
+//
+//    run(() => {
+//      component.set('blacklist', ['foo', 'bar', 'baz']);
+//    });
+//    assert.equal(component.isVisible.set.callCount, 1);
+//
+//    run(() => {
+//      component.set('blacklist', ['foo', 'bar', 'baz', 'bang']);
+//    });
+//    assert.equal(component.isVisible.get.callCount, 2);
+//
+//    run(() => {
+//      component.set('blacklist', null);
+//    });
+//    assert.equal(component.isVisible.get.callCount, 2);
+//
+//    run(() => {
+//      component.set('applicationRoute.controller.currentRouteName', 'homepage');
+//    });
+//    assert.equal(component.isVisible.get.callCount, 3);
+//
+//    run(() => {
+//      component.set('applicationRoute.controller.currentRouteName', 'videos');
+//    });
+//    assert.equal(component.isVisible.get.callCount, 4);
+// });
 
 
 test(`resolving \`isVisible\` to \`true\` when the blacklist is "empty"`, function (assert) {
