@@ -1,12 +1,8 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
-import wait from 'ember-test-helpers/wait';
-import startApp from '../../helpers/start-app';
 import hbs from 'htmlbars-inline-precompile';
 
 let actual, expected;
-let application;
-let blacklist;
 
 const { run } = Ember;
 const { getComputedStyle } = window;
@@ -18,6 +14,8 @@ const ApplicationRouteStub = Ember.Object.extend({
     currentRouteName: null
   }
 });
+
+let applicationRouteStub;
 
 const navbarClass = 'navbar';
 
@@ -47,19 +45,15 @@ test('rendering without a blacklist argument', function(assert) {
 });
 
 
-test('computing with a bound blacklist of mixed strings and regular \
- expressions', function (assert) {
+test(`computing with a bound blacklist of mixed strings and regular \
+ expressions`, function (assert) {
 
    this.set('blacklist', [
      'video-player',
      /protected(\.*)/
    ]);
+   applicationRouteStub.set('controller.currentRouteName', 'homepage');
    this.set('applicationRoute', applicationRouteStub);
-
-
-   run(() => {
-     applicationRouteStub.set('controller.currentRouteName', 'homepage');
-   });
 
    this.render(hbs`
      {{#route-shy class=navbarClass blacklist=blacklist applicationRoute=applicationRoute}}
@@ -122,8 +116,8 @@ test('computing with a bound blacklist of mixed strings and regular \
 });
 
 
-test('computing with a bound blacklist of strings when \
- `forceRegExp` is set to true', function (assert) {
+test(`computing with a bound blacklist of strings when \
+ \`forceRegExp\` is set to true`, function (assert) {
 
    this.set('blacklist', [
      'video-player',
@@ -162,26 +156,88 @@ test('computing with a bound blacklist of strings when \
    actual = getComponentStyle().display;
    assert.equal(actual, expected);
 
+});
+
+
+test(`Accepting spaced-separated names in-line`, function (assert) {
+
+  this.set('applicationRoute', applicationRouteStub);
+
+  run(() => {
+    applicationRouteStub.set('controller.currentRouteName', 'homepage');
+  });
+
+  this.render(hbs`
+    {{#route-shy class=navbarClass blacklist="video-player protected.dashboard" applicationRoute=applicationRoute}}
+      Navbar
+    {{/route-shy}}
+  `);
+
+  expected = 'block';
+  actual = getComponentStyle().display;
+  assert.equal(actual, expected);
+
+
+
+  run(() => {
+    applicationRouteStub.set('controller.currentRouteName', 'protected.dashboard');
+  });
+
+  expected = 'none';
+  actual = getComponentStyle().display;
+  assert.equal(actual, expected);
 
 });
 
-//
-// test('rendering with a bound blacklist', function (assert) {
-//
-// });
-//
-//
-//
-// test(`dynamically rendering whenever the \`currentRouteName\` changes`, function (assert) {
-//
-// });
-//
-//
-// test(`Accepting spaced-separated names in-line`, function (assert) {
-//
-// });
-//
-//
-// test(`Treating spaced-separated names as regular expressions when \`forceRegExp\` is true`, function (assert) {
-//
-// });
+
+
+test(`Treating spaced-separated names as regular expressions when \`forceRegExp\` is true`, function (assert) {
+
+  this.set('applicationRoute', applicationRouteStub);
+
+  run(() => {
+    applicationRouteStub.set('controller.currentRouteName', 'homepage');
+  });
+
+  this.render(hbs`
+    {{#route-shy
+      class=navbarClass
+      blacklist="video-(?:player|editor) protected.dashboard"
+      forceRegExp=true
+      applicationRoute=applicationRoute}}
+      Navbar
+    {{/route-shy}}
+  `);
+
+  expected = 'block';
+  actual = getComponentStyle().display;
+  assert.equal(actual, expected);
+
+
+  run(() => {
+    applicationRouteStub.set('controller.currentRouteName', 'video-player');
+  });
+
+  expected = 'none';
+  actual = getComponentStyle().display;
+  assert.equal(actual, expected);
+
+
+  run(() => {
+    applicationRouteStub.set('controller.currentRouteName', 'video-editor');
+  });
+
+  expected = 'none';
+  actual = getComponentStyle().display;
+  assert.equal(actual, expected);
+
+
+  run(() => {
+    applicationRouteStub.set('controller.currentRouteName', 'video-shocase');
+  });
+
+  expected = 'block';
+  actual = getComponentStyle().display;
+  assert.equal(actual, expected);
+
+});
