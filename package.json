@@ -13,7 +13,7 @@
   },
   "repository": "https://github.com/BrianSipple/ember-route-shy-component",
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 4.1.1"
   },
   "author": "Brian Sipple <@Brian_Sipple>",
   "license": "MIT",

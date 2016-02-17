@@ -145,13 +145,16 @@ test(`synching the computation of \`isVisible\` with a property on a\
     isProfileVisible: true
   };
 
-  component = this.subject({ applicationRoute, template: false, syncWith: myEmberObject, syncProperty: 'isProfileVisible' });
+  run(() => {
+    component = this.subject({ applicationRoute, template: false, syncWith: myEmberObject, syncProperty: 'isProfileVisible' });  
+  });
+
 
   expected = true;
   actual = get(myEmberObject, 'isProfileVisible');
   assert.equal(actual, expected);
 
-  run(() => { 
+  run(() => {
     applicationRoute.set('controller.currentRouteName', 'private');
     component.setProperties({
       syncWith: myPojo,

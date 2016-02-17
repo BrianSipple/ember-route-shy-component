@@ -1,5 +1,7 @@
 # ember-route-shy-component
 
+[![npm version](https://badge.fury.io/js/ember-route-shy-component.svg)](https://badge.fury.io/js/ember-route-shy-component) [![Build Status](https://travis-ci.org/BrianSipple/ember-route-shy-component.svg?branch=master)](https://travis-ci.org/BrianSipple/ember-route-shy-component)
+
 *A component that won't render when the application's current route is on a blacklist.*
 
 ## Why
