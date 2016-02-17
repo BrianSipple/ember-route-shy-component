@@ -5,7 +5,8 @@ import computed from 'ember-new-computed';
 const {
   Component,
   getWithDefault,
-  set
+  set,
+  run
 } = Ember;
 
 const {
@@ -79,7 +80,9 @@ export default Component.extend({
     }
 
     if (this.get('syncWith') && this.get('syncProperty')) {
-      set(this.get('syncWith'), `${this.get('syncProperty') || ''}`, isVisible);
+      run.scheduleOnce('afterRender', this, () => {
+        set(this.get('syncWith'), `${this.get('syncProperty') || ''}`, isVisible);
+      });
     }
     return isVisible;
   }),
