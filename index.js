@@ -5,6 +5,6 @@ module.exports = {
   name: 'ember-route-shy-component',
 
   isDevelopingAddon: function () {
-    return true;
+    return false;
   }
 };
