@@ -35,7 +35,7 @@ An effective approach for setting the list would be to prepare it as bound data 
 
 A super-simplified example of using model data might looks like this:
 ```
-<!-- routes/application.js -->
+<!-- application/routes.js -->
 
 model () {
   return {
@@ -50,7 +50,7 @@ model () {
     ....
   };
 
-<!-- routes/application.js -->
+<!-- application/template.hbs -->
 
 {{#route-shy blacklist=model.navbar.routesWhereHidden}}
   {{private-navbar}}
