@@ -1,6 +1,6 @@
-# ember-route-shy-component (In progress)
+# ember-route-shy-component
 
-A component that won't render when the application's current route is on a blacklist.
+*A component that won't render when the application's current route is on a blacklist.*
 
 ## Why
 
