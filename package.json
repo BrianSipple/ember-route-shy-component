@@ -1,6 +1,6 @@
 {
   "name": "ember-route-shy-component",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A component that won't render when the application's current route matches a preconfigured condition",
   "directories": {
     "doc": "doc",
