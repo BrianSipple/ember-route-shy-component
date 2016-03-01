@@ -1,6 +1,6 @@
 {
   "name": "ember-route-shy-component",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A component that won't render when the application's current route matches a preconfigured condition",
   "directories": {
     "doc": "doc",
@@ -20,7 +20,7 @@
   "devDependencies": {
     "broccoli-asset-rev": "^2.2.0",
     "ember-ajax": "0.7.1",
-    "ember-cli": "2.3.0-beta.2",
+    "ember-cli": "2.4.0",
     "ember-cli-app-version": "^1.0.0",
     "ember-cli-dependency-checker": "^1.2.0",
     "ember-cli-htmlbars-inline-precompile": "^0.3.1",
