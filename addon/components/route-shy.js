@@ -51,41 +51,46 @@ export default Component.extend({
 
 
   isVisible: computed('currentRouteName', 'blacklist', function () {
-
-    let isVisible = true;
-
     const currentRouteName = getWithDefault(this, 'currentRouteName', '') || '';
     const blacklist = this.get('blacklistArray');
-
-    if (this.get('forceRegExp')) {
-      return !this._regExpMatchAllBlacklistItems(blacklist, currentRouteName).length;
-    }
-
-    for (const routeMatcher of blacklist) {
-
-      if (typeof routeMatcher === 'string') {
-        // For strings, check equality
-        if (routeMatcher === currentRouteName) {
-          isVisible = false;
-          break;
-        }
-
-      } else if (routeMatcher instanceof RegExp) {
-        // For RegExps, search for a match
-        if (currentRouteName.search(routeMatcher) > -1) {
-          isVisible = false;
-          break;
-        }
-      }
-    }
+    const isVisible = this._isRouteNameBlacklisted(currentRouteName, blacklist);
 
     if (this.get('syncWith') && this.get('syncProperty')) {
       run.scheduleOnce('afterRender', this, () => {
         set(this.get('syncWith'), `${this.get('syncProperty') || ''}`, isVisible);
       });
     }
+
     return isVisible;
   }),
+
+
+  _isRouteNameBlacklisted (routeName = '', blacklist = []) {
+    if (this.get('forceRegExp')) {
+      return !this._regExpMatchAllBlacklistItems(blacklist, routeName).length;
+    }
+
+    let isVisible = true;
+    for (const routeMatcher of blacklist) {
+
+      if (typeof routeMatcher === 'string') {
+        // For strings, check equality
+        if (routeMatcher === routeName) {
+          isVisible = false;
+          break;
+        }
+
+      } else if (routeMatcher instanceof RegExp) {
+        // For RegExps, search for a match
+        if (routeName.search(routeMatcher) > -1) {
+          isVisible = false;
+          break;
+        }
+      }
+    }
+
+    return isVisible;
+  },
 
   /**
    * Treat every item in the blacklist as a regular expression and

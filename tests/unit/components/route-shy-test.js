@@ -130,6 +130,31 @@ test(`resolving \`isVisible\` to \`false\` when the blacklist \
 
 });
 
+test(`Partial regExp matches only register on blacklist
+  when end symbols (^ and $) aren't a part of the expression`, function (assert) {
+
+  component = this.subject({ applicationRoute, template: true });
+
+  run(() => {
+    applicationRoute.set('controller.currentRouteName', 'video.movies');
+    component.set('blacklist', [/^vid$/, /^video$/]);
+  });
+
+  expected = true;
+  actual = component.get('isVisible');
+  assert.equal(actual, expected);
+
+  run(() => {
+    applicationRoute.set('controller.currentRouteName', 'video.movies');
+    component.set('blacklist', [/vid/, /video/]);
+  });
+
+  expected = false;
+  actual = component.get('isVisible');
+  assert.equal(actual, expected);
+
+});
+
 test(`synching the computation of \`isVisible\` with a property on a\
   bound object if set`, function (assert) {
 
@@ -146,7 +171,7 @@ test(`synching the computation of \`isVisible\` with a property on a\
   };
 
   run(() => {
-    component = this.subject({ applicationRoute, template: false, syncWith: myEmberObject, syncProperty: 'isProfileVisible' });  
+    component = this.subject({ applicationRoute, template: false, syncWith: myEmberObject, syncProperty: 'isProfileVisible' });
   });
 
 

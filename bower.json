@@ -1,14 +1,10 @@
 {
   "name": "ember-route-shy-component",
   "dependencies": {
-    "ember": "2.3.0",
+    "ember": "~2.4.1",
     "ember-cli-shims": "0.1.0",
     "ember-cli-test-loader": "0.2.2",
     "ember-qunit-notifications": "0.1.0",
-    "jquery": "1.11.3",
     "sinonjs": "^1.17.1"
-  },
-  "resolutions": {
-    "ember": "2.3.0"
   }
 }
