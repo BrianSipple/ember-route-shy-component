@@ -7,7 +7,7 @@
 ## Why
 
 Often, an Ember application will have components or visual elements that are meant to be seen in some scenarios
-and hidden in others. In many cases, this is handled inherently by having different templates for different routes. In some cases, however, a component that lives in a top-level route -- a navbar, for example -- might need to have its visibility toggled dynamically based upon the current state of the application in a nested child route. `ember-route-shy-component` helps with tricky edge cases lik this.
+and hidden in others. In many cases, this is handled inherently by having different templates for different routes. In some cases, however, a component that lives in a top-level route -- a navbar, for example -- might need to have its visibility toggled dynamically based upon the current state of the application in a nested child route. `ember-route-shy-component` helps with tricky edge cases like this.
 
 
 ## Basic Usage
