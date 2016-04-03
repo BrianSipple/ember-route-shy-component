@@ -1,6 +1,6 @@
 # ember-route-shy-component
 
-[![npm version](https://badge.fury.io/js/ember-route-shy-component.svg)](https://badge.fury.io/js/ember-route-shy-component) [![Build Status](https://travis-ci.org/BrianSipple/ember-route-shy-component.svg?branch=master)](https://travis-ci.org/BrianSipple/ember-route-shy-component) [![Ember Observer Score](http://emberobserver.com/badges/ember-route-shy-component.svg)](http://emberobserver.com/addons/ember-route-shy-component)
+[![npm version](https://badge.fury.io/js/ember-route-shy-component.svg)](https://badge.fury.io/js/ember-route-shy-component) [![Build Status](https://travis-ci.org/BrianSipple/ember-route-shy-component.svg?branch=master)](https://travis-ci.org/BrianSipple/ember-route-shy-component) [![Ember Observer Score](http://emberobserver.com/badges/ember-route-shy-component.svg)](http://emberobserver.com/addons/ember-route-shy-component)[![Code Climate](https://codeclimate.com/github/BrianSipple/ember-route-shy-component/badges/gpa.svg)](https://codeclimate.com/github/BrianSipple/ember-route-shy-component)
 
 *A component that won't render when the application's current route is on a blacklist.*
 
